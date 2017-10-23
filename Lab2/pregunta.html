@@ -32,23 +32,34 @@
           <h1>CREAR PREGUNTA</h1>
 
           Dirección de correo del autor de la pregunta(*):<br>
-          <input type="text" name="correo" id="correo"><br>
+          <input type="text" name="correo" id="correo" value="jelexpuru002@ikasle.ehu.es"><br>
           Enunciado de la pregunta(*):<br>
-          <input type="text" name="pregunta" id="pregunta"><br>
+          <input type="text" name="pregunta" id="pregunta" value="Never gonna give you up"><br>
           Respuesta correcta(*):<br>
-          <input type="text" name="correcta" id="correcta"><br>
+          <input type="text" name="correcta" id="correcta" value="Rick Astley"><br>
           Respuesta incorrecta1(*):<br>
-          <input type="text" name="incorrecta1" id="incorrecta1"><br>
+          <input type="text" name="incorrecta1" id="incorrecta1" value="Bono"><br>
           Respuesta incorrecta2(*):<br>
-          <input type="text" name="incorrecta2" id="incorrecta2"><br>
+          <input type="text" name="incorrecta2" id="incorrecta2" value="Bruce Springsteen"><br>
           Respuesta incorrecta3(*):<br>
-          <input type="text" name="incorrecta3" id="incorrecta3"><br>
+          <input type="text" name="incorrecta3" id="incorrecta3" value="Paquirrin"><br>
           Complejidad de la pregunta entre 1 y 5(*):<br>
-          <input type="number" name="complejidad" id="complejidad"><br>
+          <input type="number" name="complejidad" id="complejidad" value="2"><br>
           Tema de la pregunta(*):<br>
-          <input type="text" name="tema" id="tema"><br>
+          <input type="text" name="tema" id="tema" value="Autor"><br>
           Imagen relacionada con la pregunta<b>(opcional)</b>:<br>
-          <input type="file" name="imagen"><br>
+          <input type="file" name="imagen" id="imagen" onchange="loadFile(event)"><br>
+		  <br>
+			<p>Vista previa de la imagen:</p>
+			<img id="output" width="150px" height="auto"/><br>
+			<script>
+			  var loadFile = function(event) 
+			  {
+				var output = document.getElementById('output');
+				output.src = URL.createObjectURL(event.target.files[0]);
+			  };
+			</script>
+		  
           <input type="submit" value="Enviar"><br>
         </form>
     	</div>

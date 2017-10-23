@@ -7,7 +7,7 @@
 	}
 
 
-	$mysqli_query ($mysqli, "INSERT INTO Preguntas(Correo, Pregunta, Correcta, Incorrecta1, Incorrecta2, Incorrecta3, Complejidad, Tema ) 
+	$sql= "INSERT INTO Preguntas(Correo, Pregunta, Correcta, Incorrecta1, Incorrecta2, Incorrecta3, Complejidad, Tema ) 
 		VALUES ('$_POST[correo]', '$_POST[pregunta]', 
 		'$_POST[incorrecta1]','$_POST[incorrecta2]', 
 		'$_POST[icorrecta3]', '$_POST[complejidad]',

@@ -1,5 +1,5 @@
 <?php
-	$link = mysqli_connect("localhost", "############", "#########", "########");
+	$link = mysqli_connect("localhost", "root","","quiz");
 	
 	if ($link->connect_error) {
 		die("La conexion ha fallado: " . $link->connect_error);

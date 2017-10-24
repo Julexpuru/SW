@@ -51,7 +51,7 @@
 
 //// HACER LA QUERY ////////
 
-	$link = mysqli_connect("localhost", "##########","#########","###########");
+	$link = mysqli_connect("localhost", "root","","quiz");
 
 	$sql= "INSERT INTO Preguntas(Correo, Pregunta, Correcta, Incorrecta1, Incorrecta2, Incorrecta3, Complejidad, Tema, Imagen) 
 		VALUES ('$_POST[correo]', '$_POST[pregunta]',

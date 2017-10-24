@@ -12,6 +12,24 @@
 		   type='text/css'
 		   media='only screen and (max-width: 480px)'
 		   href='estilos/smartphone.css' />
+
+    <script language="javascript">
+      function Carga( files )
+      {
+        var file= files[0];
+          
+	    reader = new FileReader();
+	    reader.onload = function(event) 
+	            { var img = new Image; 
+	              img.src = event.target.result;  }
+	    reader.readAsDataURL( file );
+      }
+	  function loadFile(event)
+      {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+    </script>
   </head>
   <body>
   <div id='page-wrap'>
@@ -28,7 +46,7 @@
 	</nav>
     <section class="main" id="s1">
     	<div>
-        <form id='fpreguntas' name='fpreguntas' onsubmit="return comprobarFormulario();" action="InsertarPregunta.php" method="post" enctype="multipart/form-data" >
+        <form id='fpreguntas' name='fpreguntas' onsubmit="return comprobarFormulario();" action="InsertarPreguntaConFoto.php" method="post" enctype="multipart/form-data" >
           <h1>CREAR PREGUNTA</h1>
 
           Dirección de correo del autor de la pregunta(*):<br>
@@ -48,18 +66,8 @@
           Tema de la pregunta(*):<br>
           <input type="text" name="tema" id="tema" value="Autor"><br>
           Imagen relacionada con la pregunta<b>(opcional)</b>:<br>
-          <input type="file" name="imagen" id="imagen" onchange="loadFile(event)"><br>
-		  <br>
-			<p>Vista previa de la imagen:</p>
-			<img id="output" width="150px" height="auto"/><br>
-			<script>
-			  var loadFile = function(event) 
-			  {
-				var output = document.getElementById('output');
-				output.src = URL.createObjectURL(event.target.files[0]);
-			  };
-			</script>
-		  
+          <input type="file" name="imagen" id="imagen" onchange="loadFiles(event);Carga(this.files);"><br>
+
           <input type="submit" value="Enviar"><br>
         </form>
     	</div>

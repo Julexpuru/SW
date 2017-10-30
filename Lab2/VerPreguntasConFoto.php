@@ -14,7 +14,7 @@
 				<th> Codigo </th> <th> Correo </th> <th> Pregunta </th> 
 				<th> Correcta </th> <th> Incorrecta1 </th>
 				<th> Incorrecta2 </th> <th> Incorrecta3 </th>
-				<th> Complejidad </th> <th> Tema </th> <th>Imagen</th>
+				<th> Complejidad </th> <th> Tema </th> <th> Imagen </th>
 			</tr>
 		";
 	
@@ -27,10 +27,9 @@
 				<td> ". $row['Incorrecta1'] ."</td> <td> ". $row['Incorrecta2'] ."</td> 
 				<td> ". $row['Incorrecta3'] ."</td> <td> ". $row['Complejidad'] ."</td> 
 				<td> ". $row['Tema'] ."</td>
-				<td><img src=".$row['Imagen']." width='"."20%"."' height='"."auto"."'></td>
-			</tr>";
+				<td><img src=".$row["Imagen"]." width='"."20%"."' height='"."auto"."'></td>            
+			</tr>";		
 	}
 	echo "</table>";
 	
-	mysqli_close($link);
-?>
+	

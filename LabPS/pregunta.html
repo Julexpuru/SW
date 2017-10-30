@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
+  <title>Preguntas</title>
+    <link rel='stylesheet' type='text/css' href='estilos/style.css' />
+	<link rel='stylesheet'
+		   type='text/css'
+		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
+		   href='estilos/wide.css' />
+	<link rel='stylesheet'
+		   type='text/css'
+		   media='only screen and (max-width: 480px)'
+		   href='estilos/smartphone.css' />
+
+    <script language="javascript">
+      function Carga( files )
+      {
+        var file= files[0];
+          
+	    reader = new FileReader();
+	    reader.onload = function(event) 
+	            { var img = new Image; 
+	              img.src = event.target.result;  }
+	    reader.readAsDataURL( file );
+      }
+	  function loadFile(event)
+      {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+    </script>
+  </head>
+  <body>
+  <div id='page-wrap'>
+  <header class='main' id='h1'>
+    <span class="right"><a href="registro">Registrarse</a></span>
+          <span class="right"><a href="login">Login</a></span>
+          <span class="right" style="display:none;"><a href="/logout">Logout</a></span>
+    <h2>Quiz: el juego de las preguntas</h2>
+    </header>
+  <nav class='main' id='n1' role='navigation'>
+    <span><a href='layout.html'>Inicio</a></spam>
+    <span><a href='quizes'>Preguntas</a></spam>
+    <span><a href='creditos'>Creditos</a></spam>
+  </nav>
+    <section class="main" id="s1">
+    	<div>
+        <form id='fpreguntas' name='fpreguntas' onsubmit="return comprobarFormulario();" action="InsertarPreguntaConFoto.php" method="post" enctype="multipart/form-data" >
+          <h1>CREAR PREGUNTA</h1>
+
+          Dirección de correo del autor de la pregunta(*):<br>
+          <input type="text" name="correo" id="correo" value="jelexpuru002@ikasle.ehu.es"><br>
+          Enunciado de la pregunta(*):<br>
+          <input type="text" name="pregunta" id="pregunta" value="Never gonna give you up"><br>
+          Respuesta correcta(*):<br>
+          <input type="text" name="correcta" id="correcta" value="Rick Astley"><br>
+          Respuesta incorrecta1(*):<br>
+          <input type="text" name="incorrecta1" id="incorrecta1" value="Bono"><br>
+          Respuesta incorrecta2(*):<br>
+          <input type="text" name="incorrecta2" id="incorrecta2" value="Bruce Springsteen"><br>
+          Respuesta incorrecta3(*):<br>
+          <input type="text" name="incorrecta3" id="incorrecta3" value="Paquirrin"><br>
+          Complejidad de la pregunta entre 1 y 5(*):<br>
+          <input type="number" name="complejidad" id="complejidad" value="2"><br>
+          Tema de la pregunta(*):<br>
+          <input type="text" name="tema" id="tema" value="Autor"><br>
+          Imagen relacionada con la pregunta<b>(opcional)</b>:<br>
+          <input type="file" name="imagen" id="imagen" onchange="loadFiles(event);Carga(this.files);"><br>
+
+          <input type="submit" value="Enviar"><br>
+        </form>
+      </div>
+    </section>
+  <footer class='main' id='f1'>
+    <p><a href="http://es.wikipedia.org/wiki/Quiz" target="_blank">Que es un Quiz?</a></p>
+    <a href='https://github.com'>Link GITHUB</a><br>
+    <a href="creditos.html"> Creditos </a><br>
+    <a href="pregunta.html"> Pregunta </a>
+  </footer>
+</div>
+
+<script type="text/javascript" src="scripts/validar.js"></script>
+
+</body>
+</html>

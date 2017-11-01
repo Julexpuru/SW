@@ -1,5 +1,5 @@
 <?php
-	$link = mysqli_connect("localhost", "root","","quiz");
+	$link = mysqli_connect("localhost", "############", "#########", "########");
 	
 	if ($link->connect_error) {
 		die("La conexion ha fallado: " . $link->connect_error);
@@ -14,7 +14,7 @@
 				<th> Codigo </th> <th> Correo </th> <th> Pregunta </th> 
 				<th> Correcta </th> <th> Incorrecta1 </th>
 				<th> Incorrecta2 </th> <th> Incorrecta3 </th>
-				<th> Complejidad </th> <th> Tema </th> <th> Imagen </th>
+				<th> Complejidad </th> <th> Tema </th>
 			</tr>
 		";
 	
@@ -27,9 +27,9 @@
 				<td> ". $row['Incorrecta1'] ."</td> <td> ". $row['Incorrecta2'] ."</td> 
 				<td> ". $row['Incorrecta3'] ."</td> <td> ". $row['Complejidad'] ."</td> 
 				<td> ". $row['Tema'] ."</td>
-				<td><img src=".$row["Imagen"]." width='"."20%"."' height='"."auto"."'></td>            
-			</tr>";		
+			</tr>";
 	}
 	echo "</table>";
 	
-	
+	mysqli_close($link);
+?>

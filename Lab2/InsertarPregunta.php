@@ -9,10 +9,9 @@
 
 	$sql= "INSERT INTO Preguntas(Correo, Pregunta, Correcta, Incorrecta1, Incorrecta2, Incorrecta3, Complejidad, Tema ) 
 		VALUES ('$_POST[correo]', '$_POST[pregunta]', 
-		'$_POST[correcta]', '$_POST[incorrecta1]',
-		'$_POST[incorrecta2]', '$_POST[incorrecta3]', 
-		'$_POST[complejidad]','$_POST[tema]')";
-
+		'$_POST[incorrecta1]','$_POST[incorrecta2]', 
+		'$_POST[icorrecta3]', '$_POST[complejidad]',
+		'$_POST[tema])")
 
 	if (!mysqli_query($link ,$sql))
 	{
@@ -30,4 +29,3 @@
 	
 	mysqli_close($link);
 ?>
-

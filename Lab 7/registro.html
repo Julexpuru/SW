@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="tipo_contenido" content="text/html;" http-equiv="content-type" charset="utf-8">
+	  <title>Quiz</title>
+    <link rel='stylesheet' type='text/css' href='estilos/style.css' />
+	  <link rel='stylesheet'
+		   type='text/css'
+		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
+		   href='estilos/wide.css' />
+	  <link rel='stylesheet'
+		   type='text/css'
+		   media='only screen and (max-width: 480px)'
+		   href='estilos/smartphone.css' />
+
+	  <script language="javascript">
+      function Carga( files )
+      {
+        var file= files[0];
+
+	    reader = new FileReader();
+	    reader.onload = function(event)
+	            { var img = new Image;
+	              img.src = event.target.result;  }
+	    reader.readAsDataURL( file );
+      }
+	  function loadFile(event)
+      {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+    </script>
+	  <script language="javascript">
+      function Validar()
+      {
+        var email = document.getElementById('email').value;
+        var nombre = document.getElementById('nombre').value;
+		var nick = document.getElementById('nick').value;
+		var pass = document.getElementById('password').value;
+		var pass2 = document.getElementById('password2').value;
+
+		if (!( /(^[a-z]+)([0-9]{3})\@ikasle\.ehu\.(es|eus)/.test(email)) || email=="" || nombre.split().length!=2
+		|| nick.split().length!=1 || pass.length <6 || pass.split().length!=1 || pass!=pass2 )
+		{
+			alert("Debe introducir unos datos validos \n");
+			return false;
+		}
+		return true;
+
+      }
+    </script>
+  </head>
+  <body>
+  <div id='page-wrap'>
+	<header class='main' id='h1'>
+		<span class="right"><a href="registro.html">Registrarse</a></span>
+    <span class="right"><a href="Login.php">Login</a></span>
+    <span class="right" style="display:none;"><a href="/logout">Logout</a></span>
+		<h2>Quiz: el juego de las preguntas</h2>
+    </header>
+	<nav class='main' id='n1' role='navigation'>
+		<span><a href='layout.php'>Inicio</a></span>
+		<span><a href='creditos.html'>Creditos</a></span>
+	</nav>
+    <section class="main" id="s1">
+		<div>
+
+		<form id='fregistro' name='fregistro' onsubmit="return Validar();" action="Registrar.php" method="post" enctype="multipart/form-data" >
+      <h1>REGISTRARSE</h1>
+
+		  Email(*):<br>
+		  <input type="text" name="email" required id="email" value="jelexpuru002@ikasle.ehu.es"><br>
+		  Nombre y Apellidos(*):<br>
+		  <input type="text" name="nombre" required id="nombre" value="Julen Elexpuru Ortiz"><br>
+		  Nick(*):<br>
+		  <input type="text" name="nick" required id="nick" value="Julexpuru"><br>
+		  Password(*):<br>
+		  <input type="password" name="password" required id="password" value="contrasena"><br>
+		  Repetir password(*):<br>
+		  <input type="password" name="password" required id="password" value="contrasena"><br>
+		  Imagen relacionada con la pregunta<b>(opcional)</b>:<br>
+		  <input type="file" name="imagen" id="imagen" onchange="loadFile(event);Carga(this.files);"><br>
+		  <p>Vista previa de la imagen:</p>
+			<img id="output" width="150px" height="auto"/></br>
+
+      <input type="submit" value="Registrarse"><br>
+    </form>
+
+		</div>
+    </section>
+	<footer class='main' id='f1'>
+		<p><a href="http://es.wikipedia.org/wiki/Quiz" target="_blank">Que es un Quiz?</a></p>
+		<a href='https://github.com/Julexpuru/SW'>Link GITHUB</a><br>
+
+		<br>
+		<a href="layout.php"> Inicio</a> <br>
+		<a href="creditos.html"> Creditos </a>
+	</footer>
+</div>
+</body>
+</html>

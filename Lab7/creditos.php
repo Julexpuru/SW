@@ -19,20 +19,33 @@
   </head>
   <body>
   <div id='page-wrap'>
-  <header class='main' id='h1'>
-		<span class="right"><a href="registro.html">Registrarse</a></span>
-    <?php
-      if($_SESSION['autenticado']=="si")
-        echo '<span class="right"><a href="Logout.php" onclick="alert(\'Cerrando sesion. ¡Vuelve pronto!\')">Logout</a></span>';
-      else
-        echo '<span class="right"><a href="Login.php">Login</a></span>';
-    ?>
-		<h2>Quiz: el juego de las preguntas</h2>
-  </header>
-	<nav class='main' id='n1' role='navigation'>
-		<span><a href='layout.php'>Inicio</a></span>
-		<span><a href='creditos.php'>Creditos</a></span>
-	</nav>
+    <header class='main' id='h1'>
+      <?php
+        if(isset($_SESSION['usuario']))
+          echo '<span> Usuario actual= '. $_SESSION['usuario']. '</span><br>';
+
+        if((isset($_SESSION['autentificado'])) && ($_SESSION['autentificado']== "si"))
+          echo '<span class="right"><a href="Logout.php" onclick="alert(\'Cerrando sesion. ¡Vuelve pronto!\')">Logout</a></span>';
+        else
+        {
+          echo '<span class="right"><a href="registro.html">Registrarse</a></span>';
+          echo '<span class="right"><a href="Login.php">Login</a></span>';
+        }
+      ?>
+      <br>
+
+      <h2>Quiz: el juego de las preguntas</h2>
+    </header>
+    <nav class='main' id='n1' role='navigation'>
+  		<span><a href='layout.php'>Inicio</a></span>
+      <?php
+        if((isset($_SESSION['usuario'])) && ($_SESSION['usuario']=="web000@ehu.es"))
+          echo '<a href="Revisar.php"">Revisar Preguntas</a>';
+        else if (isset($_SESSION['usuario']))
+          echo '<a href="GestionarPreguntas.php">GestionarPreguntas</a>';
+      ?>
+  		<span><a href='creditos.php'>Creditos</a></span>
+  	</nav>
   <section class="main" id="s1">
 
     <div>

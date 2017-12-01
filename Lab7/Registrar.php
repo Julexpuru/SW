@@ -72,13 +72,15 @@
 
 		}
 
+		mysqli_close($link);
+
 		echo '<script type="text/javascript">window.location.assign("registroAceptado.html");</script>';
 
-		mysqli_close($link);
+
 	}
 	else
 	{
-		header('Location: registroDenegado.html');
+		echo '<script type="text/javascript">window.location.assign("registroDenegado.html");</script>';
 	}
 
 ?>

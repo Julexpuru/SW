@@ -1,5 +1,11 @@
 <?php
   session_start();
+
+  if(!(isset($_SESSION['autentificado'])))
+  {
+    echo '<script> alert("Has realizado un acceso no valido, por favor vuelve a iniciar sesion correctamente") </script>';
+    echo '<script type="text/javascript">window.location.assign("layout.php");</script>';
+  }
 ?>
 
 <!DOCTYPE html>
@@ -23,8 +29,20 @@
   <body>
   <div id='page-wrap'>
     <header class='main' id='h1'>
-      <span class="right" style="display:none;"><a href="Login.php">Login</a></span>
-      <span class="right"><a href="Logout.php" onclick="alert('Cerrando sesion. ¡Vuelve pronto!')">Logout</a></span>
+      <?php
+        if(isset($_SESSION['usuario']))
+          echo '<span> Usuario actual= '. $_SESSION['usuario']. '</span><br>';
+
+        if((isset($_SESSION['autentificado'])) && ($_SESSION['autentificado']== "si"))
+          echo '<span class="right"><a href="Logout.php" onclick="alert(\'Cerrando sesion. ¡Vuelve pronto!\')">Logout</a></span>';
+        else
+        {
+          echo '<span class="right"><a href="registro.html">Registrarse</a></span>';
+          echo '<span class="right"><a href="Login.php">Login</a></span>';
+        }
+      ?>
+      <br>
+
       <h2>Quiz: el juego de las preguntas</h2>
     </header>
     <nav class='main' id='n1' role='navigation'>

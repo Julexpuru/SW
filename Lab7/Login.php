@@ -64,7 +64,7 @@
 
   					if($con==1)
   					{
-                session_start();
+                
                 $_SESSION["autentificado"]= "si";
                 $_SESSION["usuario"]= $_POST['email'];
 

@@ -52,6 +52,71 @@
     </nav>
     <section class="main" id="s1">
 
+      <div id="tablaPreguntas">
+        <?php
+          $link = mysqli_connect("localhost", "root", "", "quiz");
+          
+          if ($link->connect_error) {
+            die("La conexion ha fallado: " . $link->connect_error);
+          }
+
+          $sql = "SELECT * FROM Preguntas";
+          $result = mysqli_query($link, $sql);
+          
+          echo "
+            <table border=1> 
+              <tr> 
+                <th> Codigo </th> <th> Correo </th> <th> Pregunta </th> 
+                <th> Correcta </th> <th> Incorrecta1 </th>
+                <th> Incorrecta2 </th> <th> Incorrecta3 </th>
+                <th> Complejidad </th> <th> Tema </th> <th>Imagen</th>
+              </tr>
+            ";
+          
+          while ($row = mysqli_fetch_array($result)) 
+          {
+            echo "
+              <tr>
+                <td> ". $row['Codigo'] ."</td> <td> ". $row['Correo'] ."</td> 
+                <td> ". $row['Pregunta'] ."</td> <td> ". $row['Correcta'] ."</td> 
+                <td> ". $row['Incorrecta1'] ."</td> <td> ". $row['Incorrecta2'] ."</td> 
+                <td> ". $row['Incorrecta3'] ."</td> <td> ". $row['Complejidad'] ."</td> 
+                <td> ". $row['Tema'] ."</td>
+                <td><img src=".$row['Imagen']." width='"."20%"."' height='"."auto"."'></td>
+              </tr>";
+          }
+          echo "</table>";
+          
+          mysqli_close($link);
+        ?>
+      </div>  
+
+      <div id="insertar pregunta">
+        <form id='fpreguntas'>
+          <h1>CREAR PREGUNTA</h1>
+
+          Dirección de correo del autor de la pregunta(*):<br>
+          <input type="text" name="correo" id="correo" value="jelexpuru002@ikasle.ehu.es"><br>
+          Enunciado de la pregunta(*):<br>
+          <input type="text" name="pregunta" id="pregunta" value="Never gonna give you up"><br>
+          Respuesta correcta(*):<br>
+          <input type="text" name="correcta" id="correcta" value="Rick Astley"><br>
+          Respuesta incorrecta1(*):<br>
+          <input type="text" name="incorrecta1" id="incorrecta1" value="Bono"><br>
+          Respuesta incorrecta2(*):<br>
+          <input type="text" name="incorrecta2" id="incorrecta2" value="Bruce Springsteen"><br>
+          Respuesta incorrecta3(*):<br>
+          <input type="text" name="incorrecta3" id="incorrecta3" value="Paquirrin"><br>
+          Complejidad de la pregunta entre 1 y 5(*):<br>
+          <input type="number" name="complejidad" id="complejidad" value="2"><br>
+          Tema de la pregunta(*):<br>
+          <input type="text" name="tema" id="tema" value="Autor"><br>
+          Imagen relacionada con la pregunta<b>(opcional)</b>:<br>
+          <input type="file" name="imagen" id="imagen" onchange="loadFile(event);Carga(this.files);"><br>
+          <p>Vista previa de la imagen:</p>
+            <img id="output" width="150px" height="auto"/><br>
+        </form>
+      </div>
 
     </section>
     <footer class='main' id='f1'>

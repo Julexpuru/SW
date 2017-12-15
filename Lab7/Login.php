@@ -51,7 +51,7 @@
   				if ((preg_match("/(^[a-z]+)([0-9]{3})\@(ikasle\.)?(ehu)\.(es|eus)/", $_POST['email']))
   				and (preg_match("/^|a-zA-Z0-9]*$/", $_POST['password'])))
   				{
-  					$link = mysqli_connect("localhost", "root", "", "usuarios");
+  					$link = mysqli_connect("localhost", "root", "", "quiz");
   					$sql = "SELECT Password FROM usuarios WHERE Email = '" . $_POST['email'] . "' and Password = '" . $_POST['password'] . "'";
 
   					if (!mysqli_query($link ,$sql))
@@ -65,7 +65,7 @@
   					if($con==1)
   					{
                 
-                $_SESSION["autentificado"]= "si";
+                $_SESSION["autentificado"]= "alumno";
                 $_SESSION["usuario"]= $_POST['email'];
 
                 $sql="SELECT Foto FROM usuarios WHERE Email='" .$_POST['email'] ."'";
@@ -75,7 +75,10 @@
                 mysqli_close($link);
 
                 if($_SESSION["usuario"]=="web000@ehu.es")
+                {  
+                  $_SESSION["autentificado"]= "profesor";
                   echo '<script type="text/javascript">window.location.assign("Revisar.php");</script>';
+                }  
                 else
                   echo '<script type="text/javascript">window.location.assign("GestionarPreguntas.php");</script>';
             }

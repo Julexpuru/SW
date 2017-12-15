@@ -1,7 +1,7 @@
 <?php
   session_start();
 
-  if(!(isset($_SESSION['autentificado'])))
+  if((!(isset($_SESSION['autentificado']))) || ($_SESSION["autentificado"]!= "alumno"))
   {
     echo '<script> alert("Has realizado un acceso no valido, por favor vuelve a iniciar sesion correctamente") </script>';
     echo '<script type="text/javascript">window.location.assign("layout.php");</script>';

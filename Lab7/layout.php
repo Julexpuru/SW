@@ -23,7 +23,7 @@
         if(isset($_SESSION['usuario']))
           echo '<span> Usuario actual= '. $_SESSION['usuario']. '</span><br>';
 
-        if((isset($_SESSION['autentificado'])) && ($_SESSION['autentificado']== "si"))
+        if(isset($_SESSION['autentificado']))
           echo '<span class="right"><a href="Logout.php" onclick="alert(\'Cerrando sesion. ¡Vuelve pronto!\')">Logout</a></span>';
         else
         {

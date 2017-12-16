@@ -31,23 +31,131 @@
       }
     </script>
 	  <script language="javascript">
+
+      var emailOk=0;
+      var passOk=0;
+
+      setInterval(function(){permitirEnvio();},1000);
+
+      function permitirEnvio()
+      {
+        if((emailOk==1) && (passOk==1))
+        {
+          document.getElementById('submit').disabled=false;
+        }
+        else
+        {
+          document.getElementById('submit').disabled=true;
+        }
+      }
+
       function Validar()
       {
         var email = document.getElementById('email').value;
         var nombre = document.getElementById('nombre').value;
-		var nick = document.getElementById('nick').value;
-		var pass = document.getElementById('password').value;
-		var pass2 = document.getElementById('password2').value;
+    		var nick = document.getElementById('nick').value;
+    		var pass = document.getElementById('password').value;
+    		var pass2 = document.getElementById('password2').value;
 
-		if (!( /(^[a-z]+)([0-9]{3})\@ikasle\.ehu\.(es|eus)/.test(email)) || email=="" || nombre.split().length!=2
-		|| nick.split().length!=1 || pass.length <6 || pass.split().length!=1 || pass!=pass2 )
-		{
-			alert("Debe introducir unos datos validos \n");
-			return false;
-		}
-		return true;
+    		if (!( /(^[a-z]+)([0-9]{3})\@ikasle\.ehu\.(es|eus)/.test(email)) || email=="" || nombre.split().length!=2
+    		|| nick.split().length!=1 || pass.length <6 || pass.split().length!=1 || pass!=pass2 )
+    		{
+    			alert("Debe introducir unos datos validos \n");
+    			return false;
+    		}
+    		return true;
 
       }
+
+      function comprobarVip()
+      {
+        var correo= document.getElementById('email').value;
+
+        xmlhttp = new XMLHttpRequest();
+    		xmlhttp.onreadystatechange = function()
+        {
+    			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+          {
+    				if(xmlhttp.responseText=="SI")
+            {
+    					document.getElementById("comprobarVip").innerHTML="Usuario VIP";
+              document.getElementById("comprobarVip").style.color="green";
+              document.getElementById("comprobarVip").style.borderColor="green";
+              document.getElementById("email").style.borderColor="green";
+    					emailOk=1;
+    				}
+            else
+            {
+    					emailOk=0;
+    					document.getElementById("comprobarVip").innerHTML="El correo no esta en la lista";
+              document.getElementById("comprobarVip").style.color="red";
+              document.getElementById("comprobarVip").style.borderColor="red";
+              document.getElementById("email").style.borderColor="red";
+    				}
+    			}
+          else
+          {
+    				document.getElementById("comprobarVip").innerHTML="Comprobando correo...";
+    			}
+    		}
+
+    		xmlhttp.open("GET", "esVip.php?email="+correo,true);
+    		xmlhttp.send();
+    	}
+
+      function comprobarPass()
+      {
+        var contrasena= document.getElementById('password').value;
+
+        xmlhttp = new XMLHttpRequest();
+    		xmlhttp.onreadystatechange = function(){
+    			if (xmlhttp.readyState==4 && xmlhttp.status==200)
+          {
+    				if(xmlhttp.responseText=="VALIDA")
+            {
+    					document.getElementById("comprobarPass").innerHTML="Contraseña aceptable";
+              document.getElementById("comprobarPass").style.color="green";
+              document.getElementById("comprobarPass").style.borderColor="green";
+              document.getElementById("password").style.borderColor="green";
+    				}
+            else
+            {
+    					passOk=0;
+    					document.getElementById("comprobarPass").innerHTML="Contraseña debil";
+              document.getElementById("comprobarPass").style.color="red";
+              document.getElementById("comprobarPass").style.borderColor="red";
+              document.getElementById("password").style.borderColor="red";
+    				}
+    			}
+          else
+          {
+    				document.getElementById("comprobarPass").innerHTML="Comprobando contraseña...";
+    			}
+    		}
+
+    		xmlhttp.open("GET", "contrasenaValida.php?pass="+contrasena,true);
+    		xmlhttp.send();
+    	}
+
+      function pass2()
+      {
+        var pass = document.getElementById('password').value;
+        var repass= document.getElementById('password2');
+
+        if (pass == repass.value)
+        {
+          repass.style.borderColor ="green";
+          document.getElementById('comprobarRePass').innerHTML= "";
+          passOk=1;
+        }
+        else
+        {
+            repass.style.borderColor ="red";
+            document.getElementById('comprobarRePass').innerHTML= "Las contraseñas no coinciden";
+            document.getElementById('comprobarRePass').style.color= "red";
+        }
+      }
+
     </script>
   </head>
   <body>
@@ -68,21 +176,21 @@
       <h1>REGISTRARSE</h1>
 
 		  Email(*):<br>
-		  <input type="text" name="email" required id="email" value="jelexpuru002@ikasle.ehu.es"><br>
+		  <input type="text" name="email" required id="email" onchange="comprobarVip()" value="jelexpuru002@ikasle.ehu.es"><br><span id="comprobarVip" style="margin:10px"></span><br>
 		  Nombre y Apellidos(*):<br>
 		  <input type="text" name="nombre" required id="nombre" value="Julen Elexpuru Ortiz"><br>
 		  Nick(*):<br>
 		  <input type="text" name="nick" required id="nick" value="Julexpuru"><br>
 		  Password(*):<br>
-		  <input type="password" name="password" required id="password" value="contrasena"><br>
+		  <input type="password" name="password" required id="password" onchange="comprobarPass()" value="contrasena"><br><span id="comprobarPass" style="margin:10px"></span><br>
 		  Repetir password(*):<br>
-		  <input type="password" name="password" required id="password" value="contrasena"><br>
+		  <input type="password" name="password" required id="password2" onchange="pass2()" value="contrasena"><br><span id="comprobarRePass" style="margin:10px"></span><br>
 		  Imagen relacionada con la pregunta<b>(opcional)</b>:<br>
 		  <input type="file" name="imagen" id="imagen" onchange="loadFile(event);Carga(this.files);"><br>
 		  <p>Vista previa de la imagen:</p>
 			<img id="output" width="150px" height="auto"/></br>
 
-      <input type="submit" value="Registrarse"><br>
+      <input disabled id="submit"type="submit" value="Registrarse"><br>
     </form>
 
 		</div>

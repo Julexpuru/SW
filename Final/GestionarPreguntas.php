@@ -25,7 +25,10 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
     <script language="javascript">
-    	function pedirDatos()
+
+      setInterval(function(){numPreguntas();},2000);
+
+      function pedirDatos()
     	{
     		xmlhttp = new XMLHttpRequest();
     		xmlhttp.onreadystatechange = function()
@@ -39,20 +42,20 @@
     		xmlhttp.send();
     	}
     	function insertarDatos()
-		{
+		   {
     		xmlhttp = new XMLHttpRequest();
     		xmlhttp.onreadystatechange=function(){
     			if(xmlhttp.readyState==4 && xmlhttp.status==200)
-				{
+				  {
     				document.getElementById('insertado').innerHTML=xmlhttp.responseText;
     				alert(xmlhttp.responseText);
     			}
     		}
     		xmlhttp.open("GET","InsertarPregunta.php?correo=" + document.getElementById("correo").value +
-			"&pregunta=" + document.getElementById("correcta").value + "&correcta=" + document.getElementById("correcta").value +
-			"&incorrecta1=" +document.getElementById("incorrecta1").value + "&incorrecta2=" +document.getElementById("incorrecta2").value  +
-			"&incorrecta3=" +document.getElementById("incorrecta3").value + "&complejidad=" +document.getElementById("complejidad").value +
-			"&tema=" +document.getElementById("tema").value + "&imagen=" +document.getElementById("imagen").value , true);
+  			"&pregunta=" + document.getElementById("pregunta").value + "&correcta=" + document.getElementById("correcta").value +
+  			"&incorrecta1=" +document.getElementById("incorrecta1").value + "&incorrecta2=" +document.getElementById("incorrecta2").value  +
+  			"&incorrecta3=" +document.getElementById("incorrecta3").value + "&complejidad=" +document.getElementById("complejidad").value +
+  			"&tema=" +document.getElementById("tema").value + "&imagen=" +document.getElementById("imagen").value , true);
     		xmlhttp.send();
     	}
 
@@ -66,10 +69,20 @@
 	              img.src = event.target.result;}
 	    reader.readAsDataURL( file );
       }
-	  function loadFile(event)
+
+      function loadFile(event)
       {
         var output = document.getElementById('output');
         output.src = URL.createObjectURL(event.target.files[0]);
+      }
+
+      function numPreguntas()
+      {
+        $.ajax({
+  				url:'numeroPreguntas.php',
+  				success:function(n){
+  					$('#numPreguntas').fadeIn().html(n);}
+  			});
       }
 
     </script>
@@ -82,7 +95,7 @@
         if(isset($_SESSION['usuario']))
           echo '<span> Usuario actual= '. $_SESSION['usuario']. '</span><br>';
 
-        if((isset($_SESSION['autentificado'])) && ($_SESSION['autentificado']== "si"))
+        if(isset($_SESSION['autentificado']))
           echo '<span class="right"><a href="Logout.php" onclick="alert(\'Cerrando sesion. ¡Vuelve pronto!\')">Logout</a></span>';
         else
         {
@@ -101,8 +114,13 @@
     </nav>
     <section class="main" id="s1">
 
-      <div id="numPreguntas">
-        <p>Aparecera el numero de preguntas</p>
+      <div id="preguntas">
+        <span id="numPreguntas"></span><br>
+        <input type = "button" value = "Mostrar Preguntas" onclick = "pedirDatos()">
+      </div>
+
+      <div id="resultado" align="center" style="height:150px; overflow:auto;">
+        <p>Apareceran las preguntas del documento XML</p>
       </div>
 
       <div id="insertar pregunta">
@@ -110,7 +128,7 @@
           <h1>CREAR PREGUNTA</h1>
 
           Dirección de correo del autor de la pregunta(*):<br>
-          <input type="text" name="correo" id="correo" value="jelexpuru002@ikasle.ehu.es"><br>
+          <input disabled type="text" name="correo" id="correo" value="<?php echo $_SESSION['usuario']; ?>"><br>
           Enunciado de la pregunta(*):<br>
           <input type="text" name="pregunta" id="pregunta" value="Never gonna give you up"><br>
           Respuesta correcta(*):<br>
@@ -130,26 +148,21 @@
   	      <p>Vista previa de la imagen:</p>
             <img id="output" width="150px" height="auto"/><br>
         </form>
-      </div>
-
-      <div id="botones">
-        <form>
-          <input type = "button" value = "Mostrar preguntas" onclick = "pedirDatos()">
           <input type = "button" value = "Insertar pregunta" onclick = "insertarDatos()">
-        </form>
+
       </div>
 
       <div id="insertado">  </div>
-      <div id="resultado" align="center">  <p>Apareceran las preguntas del documento XML</p> </div><br><br>
+
 
     </section>
     <footer class='main' id='f1'>
-      <a href="http://es.wikipedia.org/wiki/Quiz" target="_blank">Que es un Quiz?</a>
+      <a href="http://es.wikipedia.org/wiki/Quiz" target="_blank">Que es un Quiz?</a><br>
     	<a href='https://github.com/Julexpuru/SW'>Link GITHUB</a><br>
 
     	<br>
-      <a href='layout.php'>Inicio</a>
-      <a href='creditos.php'>Creditos</a>
+      <a href='layout.php'>Inicio</a><br>
+      <a href='creditos.php'>Creditos</a><br>
     </footer>
   </div>
   </body>

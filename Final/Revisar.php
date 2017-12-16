@@ -25,6 +25,59 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="scripts/validar.js"></script>
+    <script language="javascript">
+      function Carga( files )
+      {
+        var file= files[0];
+
+  	    reader = new FileReader();
+  	    reader.onload = function(event)
+  	            { var img = new Image;
+  	              img.src = event.target.result;  }
+  	    reader.readAsDataURL( file );
+      }
+	    function loadFile(event)
+      {
+        var output = document.getElementById('output');
+        output.src = URL.createObjectURL(event.target.files[0]);
+      }
+    </script>
+	  <script language="javascript">
+
+      function rellenarEdicion()
+      {
+        var c =document.getElementById("codigo").value;
+
+        var xmlhttp=new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function()
+        {
+          alert(xmlhttp.readyState);
+          if (xmlhttp.readyState==4 && xmlhttp.status==200)
+          {
+
+            if(xmlhttp.responseText!="")
+            {
+              console.log(xmlhttp.responseText);
+              elementos = result.split('%*-');
+              $("#pregunta").val(elementos[0]);
+              $("#correcta").val(elementos[1]);
+              $("#incorrecta1").val(elementos[2]);
+              $("#incorrecta2").val(elementos[3]);
+              $("#incorrecta3").val(elementos[4]);
+              $("#complejidad").val(elementos[5]);
+              $("#tema").val(elementos[6]);
+
+              $("#fid").val(paramid);
+              $("#editButton").removeAttr("disabled");
+              $("#editButton").html("Editar ID " + c);
+            }
+          }
+          console.log("GET","VerPreguntasAjax.php?c=" + c);
+          xmlhttp.open("GET","VerPreguntasAjax.php?c=" + c,true);
+          xmlhttp.send();
+      }
+    }
+    </script>
   </head>
   <body>
   <div id='page-wrap'>
@@ -33,7 +86,7 @@
         if(isset($_SESSION['usuario']))
           echo '<span> Usuario actual= '. $_SESSION['usuario']. '</span><br>';
 
-        if((isset($_SESSION['autentificado'])) && ($_SESSION['autentificado']== "si"))
+        if(isset($_SESSION['autentificado']))
           echo '<span class="right"><a href="Logout.php" onclick="alert(\'Cerrando sesion. ¡Vuelve pronto!\')">Logout</a></span>';
         else
         {
@@ -52,69 +105,71 @@
     </nav>
     <section class="main" id="s1">
 
-      <div id="tablaPreguntas">
+      <div id="tablaPreguntas" style="height:200px; overflow:auto; ">
         <?php
           $link = mysqli_connect("localhost", "root", "", "quiz");
-          
+
           if ($link->connect_error) {
             die("La conexion ha fallado: " . $link->connect_error);
           }
 
           $sql = "SELECT * FROM Preguntas";
           $result = mysqli_query($link, $sql);
-          
+
           echo "
-            <table border=1> 
-              <tr> 
-                <th> Codigo </th> <th> Correo </th> <th> Pregunta </th> 
+            <table border=1 style=\"margin-left:10%; margin-right:10%;\">
+              <tr>
+                <th> Codigo </th> <th> Correo </th> <th> Pregunta </th>
                 <th> Correcta </th> <th> Incorrecta1 </th>
                 <th> Incorrecta2 </th> <th> Incorrecta3 </th>
                 <th> Complejidad </th> <th> Tema </th> <th>Imagen</th>
               </tr>
             ";
-          
-          while ($row = mysqli_fetch_array($result)) 
+
+          while ($row = mysqli_fetch_array($result))
           {
             echo "
               <tr>
-                <td> ". $row['Codigo'] ."</td> <td> ". $row['Correo'] ."</td> 
-                <td> ". $row['Pregunta'] ."</td> <td> ". $row['Correcta'] ."</td> 
-                <td> ". $row['Incorrecta1'] ."</td> <td> ". $row['Incorrecta2'] ."</td> 
-                <td> ". $row['Incorrecta3'] ."</td> <td> ". $row['Complejidad'] ."</td> 
+                <td> ". $row['Codigo'] ."</td> <td> ". $row['Correo'] ."</td>
+                <td> ". $row['Pregunta'] ."</td> <td> ". $row['Correcta'] ."</td>
+                <td> ". $row['Incorrecta1'] ."</td> <td> ". $row['Incorrecta2'] ."</td>
+                <td> ". $row['Incorrecta3'] ."</td> <td> ". $row['Complejidad'] ."</td>
                 <td> ". $row['Tema'] ."</td>
-                <td><img src=".$row['Imagen']." width='"."20%"."' height='"."auto"."'></td>
+                <td><img src=" .'"'.$row['Imagen'].'"'." width='"."20%"."' height='"."auto"."'></td>
               </tr>";
           }
           echo "</table>";
-          
+
           mysqli_close($link);
         ?>
-      </div>  
+      </div>
 
       <div id="insertar pregunta">
-        <form id='fpreguntas'>
-          <h1>CREAR PREGUNTA</h1>
+        <form id='epreguntas'>
+          <h1>EDITAR PREGUNTA</h1>
 
-          Dirección de correo del autor de la pregunta(*):<br>
-          <input type="text" name="correo" id="correo" value="jelexpuru002@ikasle.ehu.es"><br>
+          Codigo<br>
+          <input type="text" name="codigo" id= "codigo" onchange="rellenarEdicion()" ><br>
           Enunciado de la pregunta(*):<br>
-          <input type="text" name="pregunta" id="pregunta" value="Never gonna give you up"><br>
+          <input type="text" name="pregunta" id="pregunta"><br>
           Respuesta correcta(*):<br>
-          <input type="text" name="correcta" id="correcta" value="Rick Astley"><br>
+          <input type="text" name="correcta" id="correcta"><br>
           Respuesta incorrecta1(*):<br>
-          <input type="text" name="incorrecta1" id="incorrecta1" value="Bono"><br>
+          <input type="text" name="incorrecta1" id="incorrecta1"><br>
           Respuesta incorrecta2(*):<br>
-          <input type="text" name="incorrecta2" id="incorrecta2" value="Bruce Springsteen"><br>
+          <input type="text" name="incorrecta2" id="incorrecta2"><br>
           Respuesta incorrecta3(*):<br>
-          <input type="text" name="incorrecta3" id="incorrecta3" value="Paquirrin"><br>
+          <input type="text" name="incorrecta3" id="incorrecta3"><br>
           Complejidad de la pregunta entre 1 y 5(*):<br>
-          <input type="number" name="complejidad" id="complejidad" value="2"><br>
+          <input type="number" name="complejidad" id="complejidad"><br>
           Tema de la pregunta(*):<br>
-          <input type="text" name="tema" id="tema" value="Autor"><br>
+          <input type="text" name="tema" id="tema"><br>
           Imagen relacionada con la pregunta<b>(opcional)</b>:<br>
           <input type="file" name="imagen" id="imagen" onchange="loadFile(event);Carga(this.files);"><br>
           <p>Vista previa de la imagen:</p>
             <img id="output" width="150px" height="auto"/><br>
+
+          <input disabled id="editButton" type="submit" value="Editar">
         </form>
       </div>
 

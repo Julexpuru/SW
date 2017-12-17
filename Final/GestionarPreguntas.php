@@ -48,7 +48,6 @@
     			if(xmlhttp.readyState==4 && xmlhttp.status==200)
 				  {
     				document.getElementById('insertado').innerHTML=xmlhttp.responseText;
-    				alert(xmlhttp.responseText);
     			}
     		}
     		xmlhttp.open("GET","InsertarPregunta.php?correo=" + document.getElementById("correo").value +
@@ -120,7 +119,7 @@
       </div>
 
       <div id="resultado" align="center" style="height:150px; overflow:auto;">
-        <p>Apareceran las preguntas del documento XML</p>
+        <p>Apareceran las preguntas</p>
       </div>
 
       <div id="insertar pregunta">

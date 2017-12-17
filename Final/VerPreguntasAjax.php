@@ -40,9 +40,9 @@
       }
       else
       {
-        $sql = "SELECT * FROM Preguntas WHERE Codigo=".$_GET["c"];
+        $sql = "SELECT * FROM preguntas WHERE Codigo=".$_GET["c"];
         if (!mysqli_query($link,$sql))
-          echo "";  //si la pregunta no esta en la base de datos, no modifica el formulario anterior
+          echo "";
         else
         {
           $result = mysqli_query($link, $sql);
@@ -50,14 +50,14 @@
 
           if (mysqli_num_rows($result)==1)
           {
-    				$row = $row['pregunta'].'%*-'.$row['respuestaok']
-    				.'%*-'.$row['respuestamal1'].'%*-'.$row['respuestamal2'].'%*-'.$row['respuestamal3']
-    				.'%*-'.$row['complejidad'].'%*-'.$row['tema'];
+    				$respuesta = '%*-'.$row['Pregunta'].'%*-'.$row['Correcta']
+    				.'%*-'.$row['Incorrecta1'].'%*-'.$row['Incorrecta2'].'%*-'.$row['Incorrecta3']
+    				.'%*-'.$row['Complejidad'].'%*-'.$row['Tema'].'%*-';
     			}
-          else if (mysqli_num_rows($result)==0){
-    				$respuesta = "";
+          else if (mysqli_num_rows($result)==0)
+    				$respuesta = "%*-error%*-";
 
-  			echo $respuesta;
+  				echo $respuesta;
         }
       }
 		?>

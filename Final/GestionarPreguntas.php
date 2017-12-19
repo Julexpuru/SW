@@ -27,6 +27,7 @@
     <script language="javascript">
 
       setInterval(function(){numPreguntas();},2000);
+      var imagen;
 
       function pedirDatos()
     	{
@@ -43,6 +44,7 @@
     	}
     	function insertarDatos()
 		   {
+
     		xmlhttp = new XMLHttpRequest();
     		xmlhttp.onreadystatechange=function(){
     			if(xmlhttp.readyState==4 && xmlhttp.status==200)
@@ -50,11 +52,11 @@
     				document.getElementById('insertado').innerHTML=xmlhttp.responseText;
     			}
     		}
-    		xmlhttp.open("GET","InsertarPregunta.php?correo=" + document.getElementById("correo").value +
+    		xmlhttp.open("GET","InsertarPreguntaConFoto.php?correo=" + document.getElementById("correo").value +
   			"&pregunta=" + document.getElementById("pregunta").value + "&correcta=" + document.getElementById("correcta").value +
   			"&incorrecta1=" +document.getElementById("incorrecta1").value + "&incorrecta2=" +document.getElementById("incorrecta2").value  +
   			"&incorrecta3=" +document.getElementById("incorrecta3").value + "&complejidad=" +document.getElementById("complejidad").value +
-  			"&tema=" +document.getElementById("tema").value + "&imagen=" +document.getElementById("imagen").value , true);
+  			"&tema=" +document.getElementById("tema").value + "&imagen=" +imagen , true);
     		xmlhttp.send();
     	}
 
@@ -66,13 +68,15 @@
 	    reader.onload = function(event)
 	            { var img = new Image;
 	              img.src = event.target.result;}
-	    reader.readAsDataURL( file );
+	     reader.readAsDataURL( file );
+
       }
 
       function loadFile(event)
       {
         var output = document.getElementById('output');
         output.src = URL.createObjectURL(event.target.files[0]);
+        imagen = event.target.files[0].name;
       }
 
       function numPreguntas()
@@ -146,6 +150,7 @@
           <input type="file" name="imagen" id="imagen" onchange="loadFile(event);Carga(this.files);"><br>
   	      <p>Vista previa de la imagen:</p>
             <img id="output" width="150px" height="auto"/><br>
+
         </form>
           <input type = "button" value = "Insertar pregunta" onclick = "insertarDatos()">
 

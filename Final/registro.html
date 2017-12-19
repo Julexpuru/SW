@@ -57,12 +57,22 @@
     		var pass = document.getElementById('password').value;
     		var pass2 = document.getElementById('password2').value;
 
-    		if (!( /(^[a-z]+)([0-9]{3})\@ikasle\.ehu\.(es|eus)/.test(email)) || email=="" || nombre.split().length!=2
-    		|| nick.split().length!=1 || pass.length <6 || pass.split().length!=1 || pass!=pass2 )
-    		{
-    			alert("Debe introducir unos datos validos \n");
-    			return false;
-    		}
+    		if (!( /(^[a-z]+)([0-9]{3})\@ikasle\.ehu\.(es|eus)/.test(email)) || (email==""))
+        {
+          alert("Email no valido");
+          return false;
+        }
+        else if(nick.split().length!=1)
+        {
+          alert("Nick no valido");
+          return false;
+        }
+    		else if( pass.length <6 || pass.split().length!=1 || pass!=pass2 )
+        {
+          alert("Contraseña no valida");
+          return false;
+        }
+
     		return true;
 
       }
@@ -176,15 +186,15 @@
       <h1>REGISTRARSE</h1>
 
 		  Email(*):<br>
-		  <input type="text" name="email" required id="email" onchange="comprobarVip()" value="jelexpuru002@ikasle.ehu.es"><br><span id="comprobarVip" style="margin:10px"></span><br>
+		  <input type="text" name="email" required id="email" onfocusout="comprobarVip()" value="jelexpuru002@ikasle.ehu.es"><br><span id="comprobarVip" style="margin:10px"></span><br>
 		  Nombre y Apellidos(*):<br>
 		  <input type="text" name="nombre" required id="nombre" value="Julen Elexpuru Ortiz"><br>
 		  Nick(*):<br>
 		  <input type="text" name="nick" required id="nick" value="Julexpuru"><br>
 		  Password(*):<br>
-		  <input type="password" name="password" required id="password" onchange="comprobarPass()" value="contrasena"><br><span id="comprobarPass" style="margin:10px"></span><br>
+		  <input type="password" name="password" required id="password" onfocusout="comprobarPass()" value="contrasena"><br><span id="comprobarPass" style="margin:10px"></span><br>
 		  Repetir password(*):<br>
-		  <input type="password" name="password" required id="password2" onchange="pass2()" value="contrasena"><br><span id="comprobarRePass" style="margin:10px"></span><br>
+		  <input type="password" name="password" required id="password2" onfocusout="pass2()" value="contrasena"><br><span id="comprobarRePass" style="margin:10px"></span><br>
 		  Imagen relacionada con la pregunta<b>(opcional)</b>:<br>
 		  <input type="file" name="imagen" id="imagen" onchange="loadFile(event);Carga(this.files);"><br>
 		  <p>Vista previa de la imagen:</p>

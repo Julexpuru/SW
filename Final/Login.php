@@ -51,8 +51,10 @@
   				if ((preg_match("/(^[a-z]+)([0-9]{3})\@(ikasle\.)?(ehu)\.(es|eus)/", $_POST['email']))
   				and (preg_match("/^|a-zA-Z0-9]*$/", $_POST['password'])))
   				{
+            $pass= crypt($_POST['password'],"cifrado");
+
   					$link = mysqli_connect("localhost", "root", "", "quiz");
-  					$sql = "SELECT Password FROM usuarios WHERE Email = '" . $_POST['email'] . "' and Password = '" . $_POST['password'] . "'";
+  					$sql = "SELECT Password FROM usuarios WHERE Email = '" . $_POST['email'] . "' and Password = '" . $pass . "'";
 
   					if (!mysqli_query($link ,$sql))
   					{
@@ -110,6 +112,7 @@
 				<br>
 
 				<input type="submit" value="Entrar"><br>
+        <a href="recuperarPass.php">¿Has olvidado tu contraseña?</a>
 			</form>
 
 		</div>

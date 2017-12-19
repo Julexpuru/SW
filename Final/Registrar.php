@@ -57,11 +57,11 @@
 	and (preg_match("/^[a-zA-Z0-9]*$/", $_POST['nick']))
 	and (preg_match("/^|a-zA-Z0-9]*$/", $_POST['password'])))
 	{
-		$link = mysqli_connect("localhost", "root", "", "usuarios");
+		$link = mysqli_connect("localhost", "root", "", "quiz");
 
-		$sql= "INSERT INTO Usuarios(Email, Nombre, Nick, Password, Foto)
+		$sql= "INSERT INTO usuarios(Email, Nombre, Nick, Password, Foto)
 			VALUES ('$_POST[email]', '$_POST[nombre]',
-			'$_POST[nick]', '$_POST[password]','$target_file')";
+			'$_POST[nick]', '" .crypt($_POST[password], "cifrado")."','$target_file')";
 
 
 		if (!mysqli_query($link ,$sql))

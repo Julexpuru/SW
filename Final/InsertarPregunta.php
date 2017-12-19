@@ -19,37 +19,6 @@
 		$sql= "INSERT INTO Preguntas(Correo, Pregunta, Correcta, Incorrecta1, Incorrecta2, Incorrecta3, Complejidad, Tema, Imagen)
 			VALUES ('".$correo."', '".$pregunta."', '".$correcta."', '".$incorrecta1."', '".$incorrecta2."', '".$incorrecta3."', '".$complejidad."', '".$tema."', '')";
 
-		////////// AÑADIR AL XML //////////
-
-		$xml = simplexml_load_file("preguntas.xml");
-
-		$preguntaXML = $xml->addChild('assessmentItem');
-			$preguntaXML->addAttribute('complexity', $complejidad);
-			$preguntaXML->addAttribute('subject', $tema);
-			$preguntaXML->addAttribute('author', $correo);
-
-		$itemBody = $preguntaXML->addChild('itemBody');
-			$itemBody->addChild('p', $pregunta);
-
-		$correctResponse = $preguntaXML->addChild('correctResponse');
-			$correctResponse->addChild('value', $correcta);
-
-		$incorrectResponses = $preguntaXML->addChild('incorrectResponses');
-			$incorrectResponses->addChild('value', $incorrecta1);
-			$incorrectResponses->addChild('value', $incorrecta2);
-			$incorrectResponses->addChild('value', $incorrecta3);
-
-		// Guardar el fichero XML
-		$domxml = new DOMDocument('1.0');
-
-		$domxml->preserveWhiteSpace = false;
-
-		$domxml->formatOutput = true;
-
-		$domxml->loadXML($xml->asXML()); /* $xml es nuestro SimpleXMLElement a guardar*/
-
-		$domxml->save('preguntas.xml');
-
 
 		if (!mysqli_query($link ,$sql))
 		{
